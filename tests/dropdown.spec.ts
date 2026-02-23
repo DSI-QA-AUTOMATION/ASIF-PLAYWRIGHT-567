@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test('TC-06 | Verify all dropdowns work are selectable', async ({ page }) => {
+test('TC-006 | Verify all dropdowns work are selectable', async ({ page }) => {
     await page.goto('https://demoqa.com/select-menu');
 
     // Custom dropdowns (React Select)
