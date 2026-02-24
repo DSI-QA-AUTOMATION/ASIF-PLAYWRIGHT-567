@@ -2,6 +2,7 @@ import { expect, Locator, Page } from "@playwright/test";
 
 export const PAGE_URLS = {
     ELEMENTS: 'https://demoqa.com/elements',
+    FORMS: 'https://demoqa.com/forms',
     HOME: 'https://demoqa.com/',
     TEXT_BOX: 'https://demoqa.com/text-box',
     CHECKBOX: 'https://demoqa.com/checkbox',
@@ -9,6 +10,8 @@ export const PAGE_URLS = {
     WEB_TABLE: 'https://demoqa.com/webtables',
     BUTTONS: 'https://demoqa.com/buttons',
     LINKS: 'https://demoqa.com/links',
+    UPLOAD_DOWNLOAD: 'https://demoqa.com/upload-download',
+    PRACTICE_FORM: 'https://demoqa.com/automation-practice-form',
 } as const;
 
 export class BasePage {
@@ -23,37 +26,47 @@ export class BasePage {
     readonly sideBarWebTableLink: Locator;
     readonly sideBarButtonsLink: Locator;
     readonly sideBarLinksLink: Locator;
+    readonly sideBarUploadDownloadLink: Locator;
+    readonly sideBarPracticeFormLink: Locator;
 
     constructor(page: Page, url: string) {
         this.url = url;
         this.page = page;
         this.homePageCards = this.page.locator('.category-cards a');
         this.logo = this.page.locator("a[href='https://demoqa.com'] img");
-        this.sideBarTextBoxLink = this.page.getByRole('link', { 
-            name: 'Text Box' 
+        this.sideBarTextBoxLink = this.page.getByRole('link', {
+            name: 'Text Box'
         });
-        this.sideBarCheckBoxLink = this.page.getByRole('link', { 
-            name: 'Check Box' 
+        this.sideBarCheckBoxLink = this.page.getByRole('link', {
+            name: 'Check Box'
         });
-        this.sideBarRadioButtonLink = this.page.getByRole('link', { 
-            name: 'Radio Button' 
+        this.sideBarRadioButtonLink = this.page.getByRole('link', {
+            name: 'Radio Button'
         });
-        this.sideBarWebTableLink = this.page.getByRole('link', { 
-            name: 'Web Tables' 
+        this.sideBarWebTableLink = this.page.getByRole('link', {
+            name: 'Web Tables'
         });
-        this.sideBarButtonsLink = this.page.getByRole('link', { 
-            name: 'Buttons' 
+        this.sideBarButtonsLink = this.page.getByRole('link', {
+            name: 'Buttons'
         });
-        this.sideBarLinksLink = this.page.getByRole('link', { 
+        this.sideBarLinksLink = this.page.getByRole('link', {
             name: 'Links',
-            exact: true 
+            exact: true
+        });
+        this.sideBarUploadDownloadLink = this.page.getByRole('link', {
+            name: 'Upload and Download',
+            exact: true
+        });
+        this.sideBarPracticeFormLink = this.page.getByRole('link', {
+            name: 'Practice Form',
+            exact: true
         });
     }
 
     async navigateToHomePage() {
-        await this.page.goto(PAGE_URLS.HOME, { 
-            timeout: 10000, 
-            waitUntil: 'domcontentloaded' 
+        await this.page.goto(PAGE_URLS.HOME, {
+            timeout: 10000,
+            waitUntil: 'domcontentloaded'
         });
         await expect(this.logo, 'Verify logo is visible on Home Page').toBeVisible(
             { timeout: 10000 }
@@ -114,6 +127,18 @@ export class BasePage {
                 await this.sideBarLinksLink.click({ timeout: 5000 });
                 await this.verifyPageLoaded();
                 break;
+            case PAGE_URLS.UPLOAD_DOWNLOAD:
+                await this.navigateToHomePage();
+                await this.clickCatagoryCard(0);
+                await this.sideBarUploadDownloadLink.click({ timeout: 5000 });
+                await this.verifyPageLoaded();
+                break;
+            case PAGE_URLS.PRACTICE_FORM:
+                await this.navigateToHomePage();
+                await this.clickCatagoryCard(1);
+                await this.sideBarPracticeFormLink.click({ timeout: 5000 });
+                await this.verifyPageLoaded();
+                break;
             default:
                 throw new Error(
                     `No navigation flow defined in BasePage for URL: ${this.url}`
@@ -129,7 +154,15 @@ export class BasePage {
                     this.page,
                     `Verify URL is: ${PAGE_URLS.ELEMENTS}`).toHaveURL(
                         PAGE_URLS.ELEMENTS, {
-                        timeout: 15000, 
+                        timeout: 15000,
+                    });
+                break;
+            case 1:
+                await expect(
+                    this.page,
+                    `Verify URL is: ${PAGE_URLS.FORMS}`).toHaveURL(
+                        PAGE_URLS.FORMS, {
+                        timeout: 15000,
                     });
                 break;
             default:

@@ -35,5 +35,45 @@ export class DataHelper {
     static getRandomDepartment(): string {
         return faker.commerce.department();
     }
+
+    static getRandomDateOfBirth(): string {
+        const start = new Date(1950, 0, 1);
+        const end = new Date(2005, 11, 31);
+        const dob = 
+            new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+        const day = String(dob.getDate()).padStart(2, '0');
+        const month = String(dob.getMonth() + 1).padStart(2, '0');
+        const year = dob.getFullYear();
+        return `${day} ${month} ${year}`;
+    }
+
+    static getValidMobileNumber(): string {
+        return faker.string.numeric(10);
+    }
+
+    static getRandomCurrentAddress(): string {
+        return faker.location.streetAddress(true);
+    }
+
+    static getRandomState(): string {
+        const states = [
+            'NCR',
+            'Uttar Pradesh',
+            'Haryana',
+            'Rajasthan'
+        ];
+        return states[Math.floor(Math.random() * states.length)];
+    }
+
+    static getRandomCity(state: string): string {
+        const citiesByState: { [key: string]: string[] } = {
+            'NCR': ['Delhi', 'Gurgaon', 'Noida'],
+            'Uttar Pradesh': ['Agra', 'Lucknow', 'Merrut'],
+            'Haryana': ['Karnal', 'Panipat'],
+            'Rajasthan': ['Jaipur', 'Jaiselmer']
+        };
+        const cities = citiesByState[state];
+        return cities[Math.floor(Math.random() * cities.length)];
+    }
 }
 

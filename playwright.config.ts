@@ -40,7 +40,7 @@ export default defineConfig({
     navigationTimeout: 20000, // 20 seconds timeout for page.goto or navigation waits
     screenshot: 'only-on-failure', // Captures screenshot on the moment a test fails
     video: {
-      mode: 'retain-on-failure', 
+      mode: 'on', 
       size: { width: 1280, height: 720 }
     }
   },

@@ -6,6 +6,8 @@ import { RadioButton } from './radioButton';
 import { WebTable } from './webTable';
 import { Buttons } from './buttons';
 import { Links } from './links';
+import { UploadDownload } from './upload-download';
+import { PracticeForm } from './practiceForm';
 
 export class PageManager {
     private readonly page: Page;
@@ -16,6 +18,8 @@ export class PageManager {
     readonly webTablePage: WebTable;
     readonly buttonsPage: Buttons;
     readonly linksPage: Links;
+    readonly uploadDownloadPage: UploadDownload;
+    readonly practiceFormPage: PracticeForm;
 
     constructor(page: Page) {
         this.page = page;
@@ -26,5 +30,7 @@ export class PageManager {
         this.webTablePage = new WebTable(this.page);
         this.buttonsPage = new Buttons(this.page);
         this.linksPage = new Links(this.page);
+        this.uploadDownloadPage = new UploadDownload(this.page);
+        this.practiceFormPage = new PracticeForm(this.page);
     }
 }
